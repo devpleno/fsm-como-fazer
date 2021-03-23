@@ -1,8 +1,11 @@
+<a href="/categorias/nova">Nova Categoria</a>
 <% categorias.forEach(categoria => { %>
   <%= categoria.categoria %>
+  <a href="/categorias/editar/<%= categoria.id %>">
+    Editar
+  </a>
     <a href="/categorias/excluir/<%= categoria.id %>">
-      Ecxluir
+      Excluir
     </a>
   <br/>
 <% }) %>
-<%= JSON.stringify(categorias) %>

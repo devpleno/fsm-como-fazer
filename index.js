@@ -18,28 +18,49 @@ app.get('/categorias/nova', (req, res) => {
 })
 
 app.post('/categorias/nova', async (req, res) => {
-  // console.log(req.body)
   await axios.post('https://como-fazer-devpleno-lab.firebaseio.com/categorias.json', {
     categoria: req.body.categoria
   })
-  res.send(req.body)
+  // res.send(req.body)
+  res.redirect('/categorias')
 })
 
 app.get('/categorias', async (req, res) => {
   const content = await axios.get('https://como-fazer-devpleno-lab.firebaseio.com/categorias.json')
-  // const categorias = Object.keys(content.data).map(key => content.data[key])
-  const categorias = Object.keys(content.data).map(key => {
-    return {
-      id: key,
-      ...content.data[key]
-    }
-  })
-  res.render('categorias/index', { categorias: categorias })
+  if (content.data) {
+    const categorias = Object.keys(content.data).map(key => {
+      return {
+        id: key,
+        ...content.data[key]
+      }
+    })
+    res.render('categorias/index', { categorias: categorias })
+  } else {
+    res.render('categorias/index', { categorias: [] })
+  }
 })
 
 app.get('/categorias/excluir/:id', async (req, res) => {
   await axios.delete(`https://como-fazer-devpleno-lab.firebaseio.com/categorias/${req.params.id}.json`)
-  res.send('excluido')
+  res.redirect('/categorias')
+})
+
+
+app.get('/categorias/editar/:id', async (req, res) => {
+  const content = await axios.get(`https://como-fazer-devpleno-lab.firebaseio.com/categorias/${req.params.id}.json`)
+  res.render('categorias/editar', {
+    categoria: {
+      id: req.params.id,
+      ...content.data
+    }
+  })
+})
+
+app.post('/categorias/editar/:id', async (req, res) => {
+  await axios.put(`https://como-fazer-devpleno-lab.firebaseio.com/categorias/${req.params.id}.json`, {
+    categoria: req.body.categoria
+  })
+  res.redirect('/categorias')
 })
 
 app.listen(port, err => {

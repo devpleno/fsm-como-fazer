@@ -1,8 +1,9 @@
 const axios = require('axios')
 const baseURL = 'https://como-fazer-devpleno-lab.firebaseio.com/'
+const auth = ''
 
 const list = async key => {
-  const content = await axios.get(baseURL + key + '.json')
+  const content = await axios.get(baseURL + key + '.json?auth=' + auth)
   if (content.data) {
     const objetos = Object.keys(content.data).map(key => {
       return {
@@ -16,12 +17,12 @@ const list = async key => {
 }
 
 const apagar = async (key, id) => {
-  await axios.delete(baseURL + key + '/' + id + '.json')
+  await axios.delete(baseURL + key + '/' + id + '.json?auth=' + auth)
   return true
 }
 
 const get = async (key, id) => {
-  const content = await axios.get(`${baseURL}/${key}/${id}.json`)
+  const content = await axios.get(`${baseURL}/${key}/${id}'.json?auth=` + auth)
   return {
     id: id,
     ...content.data
@@ -29,12 +30,12 @@ const get = async (key, id) => {
 }
 
 const update = async (key, id, data) => {
-  await axios.put(`${baseURL}/${key}/${id}.json`, data)
+  await axios.put(`${baseURL}/${key}/${id}.json?auth=` + auth, data)
   return true
 }
 
 const create = async (key, data) => {
-  await axios.post(`${baseURL}/${key}.json`, data)
+  await axios.post(`${baseURL}/${key}.json?auth=` + auth, data)
   return true
 }
 

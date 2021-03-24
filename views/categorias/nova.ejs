@@ -1,4 +1,8 @@
+<%- include('../header') %>
 <form method="POST" action="/categorias/nova">
-  <input placeholder="Insira o nome da categoria" type="text" name="categoria"/>
-  <button>Salvar</button>
+  <label for="categoria">Categoria</label>
+    <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Digite a categoria">
+  </div>
+  <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
+<%- include('../footer') %>

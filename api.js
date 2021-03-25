@@ -22,7 +22,7 @@ const apagar = async (key, id) => {
 }
 
 const get = async (key, id) => {
-  const content = await axios.get(`${baseURL}/${key}/${id}'.json?auth=` + auth)
+  const content = await axios.get(`${baseURL}/${key}/${id}.json?auth=` + auth)
   return {
     id: id,
     ...content.data
